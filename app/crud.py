@@ -5,7 +5,7 @@ from fastapi import HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi.responses import JSONResponse 
 
-def registration(db:Session,details:schema.registration):
+def registration(db:Session,details:schema.Registration):
     username = db.query(models.User).filter(models.User.username == details.username).first()
     if username :
             raise HTTPException(status_code=404,detail= 'Username is already taken')
@@ -24,7 +24,7 @@ def registration(db:Session,details:schema.registration):
 def login(form_data:OAuth2PasswordRequestForm,db:Session):
     username = utils.get_user(form_data.username,db)
     if not username:
-         raise HTTPException(status_code=409, detail="Invalid credentials")
+         raise HTTPException(status_code=401, detail="Invalid credentials")
     password = utils.pwd_verify(form_data.password,username.password) 
     if not password:
         raise HTTPException(status_code=401,detail='Wrong password')
@@ -35,7 +35,7 @@ def login(form_data:OAuth2PasswordRequestForm,db:Session):
         key = 'access_token',
         value = access_token,
         httponly = True,
-        secure = True,
+        secure = settings.IS_PRODUCTION,
         samesite = 'lax',
         max_age = settings.ACCESS_TOKEN_EXPIRY_MINUTES * 60
         

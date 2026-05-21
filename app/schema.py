@@ -4,7 +4,7 @@ class Login(BaseModel):
     username: str = Field(...)
     password: str = Field(..., min_length=8)
 
-class registration(Login):
+class Registration(Login):
     mobile_no: str = Field(..., max_length=10, min_length=10,pattern=r'^[6-9]\d{9}$')
     email: EmailStr
     address: str = Field(...)

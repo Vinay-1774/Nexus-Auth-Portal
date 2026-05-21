@@ -208,9 +208,17 @@ async function showDashboard() {
         if (sessionExpiry) sessionExpiry.textContent = '30 minutes';
         console.log('Session info updated');
 
-        // Time display
-        updateDashTime();
-        setInterval(updateDashTime, 60000);
+        // // Time display
+        // updateDashTime();
+        // setInterval(updateDashTime, 60000);
+        let dashTimeInterval = null;
+
+        // showDashboard() mein
+        if (dashTimeInterval) clearInterval(dashTimeInterval);
+        dashTimeInterval = setInterval(updateDashTime, 60000);
+
+        // stopSessionTimer() mein ya logout mein
+        clearInterval(dashTimeInterval);
 
         // Start session countdown timer
         startSessionTimer();

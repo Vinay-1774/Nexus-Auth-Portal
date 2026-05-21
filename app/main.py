@@ -15,7 +15,7 @@ app = FastAPI()
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://127.0.0.1:8000", "http://localhost:8000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -47,7 +47,7 @@ async def serve_app_js():
 # ---- API Routes ----
 
 @app.post("/register", response_model=schema.Delete_user)
-def registration(details: schema.registration, db: Session = Depends(database.get_db)):
+def registration(details: schema.Registration, db: Session = Depends(database.get_db)):
     user = crud.registration(db, details)
     return user
 

@@ -8,5 +8,5 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRY_MINUTES: int = 30
     DATABASE_URL:str
     model_config = ConfigDict(env_file=str(Path(__file__).resolve().parent.parent / ".env"))
-
+    IS_PRODUCTION:bool = False
 settings = Settings()
